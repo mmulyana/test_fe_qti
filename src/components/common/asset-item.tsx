@@ -11,7 +11,7 @@ type Props = {
 
 export default function AssetItem({ data }: Props) {
   return (
-    <div className='p-3 border-b border-[#d6dcec] flex justify-between'>
+    <div className='p-3 border-b border-[#d6dcec] flex justify-between items-center'>
       <div>
         <p className='text-[#818896] text-sm font-medium mb-0.5'>Asset Name</p>
         <p className='text-[#06122B] font-semibold'>{data.name}</p>
