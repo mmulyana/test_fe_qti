@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import avatar from '/public/avatar.png'
+import avatar from '/public/Avatar.png'
 import chevronDownIcon from '/public/chevron-down.svg'
 import { useAuthStore } from '@/store/authStore'
 
