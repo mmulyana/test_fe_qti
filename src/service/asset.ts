@@ -88,3 +88,15 @@ export async function deleteAsset(id: string): Promise<string | undefined> {
     return
   }
 }
+
+export default async function searchAsset(
+  name: string
+): Promise<AssetResponse | undefined> {
+  try {
+    const res = await http(`/asset?search=${name}`)
+    return res.data
+  } catch (error) {
+    console.log(error)
+    return
+  }
+}
