@@ -11,11 +11,12 @@ export default function Page() {
   const [search, setSearch] = useState<string>('')
   const [data, setData] = useState<ResultAsset[]>([])
   const [page, setPage] = useState<number>(1)
+  const [size, setSize] = useState<string>('10')
   const [pageLength, setPageLength] = useState<number>(0)
 
   useEffect(() => {
     async function getData() {
-      const res = await getAllAsset(page)
+      const res = await getAllAsset(page, size)
       setPageLength(res?.page_count as number)
       setData(res?.results as ResultAsset[])
     }
@@ -37,7 +38,7 @@ export default function Page() {
 
   async function handleChangeNavigation(page: number) {
     setPage(page)
-    const res = await getAllAsset(page)
+    const res = await getAllAsset(page, size)
     setData(res?.results as ResultAsset[])
   }
 
@@ -54,7 +55,7 @@ export default function Page() {
     if (search !== '') return
 
     async function getData() {
-      const res = await getAllAsset(page)
+      const res = await getAllAsset(page, size)
       setPageLength(res?.page_count as number)
       setData(res?.results as ResultAsset[])
     }
@@ -86,6 +87,20 @@ export default function Page() {
     return pagination
   }
 
+  // function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  //   const { value } = e.target
+  //   setSize(value)
+
+  //   handleChangeSize()
+  // }
+
+  async function handleChangeSize(size: string) {
+    const res = await getAllAsset(page, size)
+    console.log(res)
+    setPageLength(res?.page_count as number)
+    setData(res?.results as ResultAsset[])
+  }
+
   return (
     <>
       <p className='text-xl font-semibold text-[#06122B] mt-[23px]'>
@@ -97,7 +112,23 @@ export default function Page() {
           <button type='submit' hidden />
         </form>
       </div>
-      <div className='mt-3 pl-3 pr-4 pb-3 py-[10px] bg-white rounded-md max-h-[280px] overflow-x-auto'>
+      <div className='mt-3'>
+        <select
+          onChange={(e) => {
+            setSize(e.target.value)
+            handleChangeSize(e.target.value as string)
+          }}
+          value={size}
+          className='w-12 h-8 rounded text-sm px-1.5'
+        >
+          {[5, 10, 15, 20].map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className='mt-1.5 pl-3 pr-4 pb-3 py-[10px] bg-white rounded-md max-h-[280px] overflow-x-auto'>
         {data.map((data: any) => (
           <AssetItem key={data.id} data={data} />
         ))}

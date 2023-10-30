@@ -32,9 +32,9 @@ export interface SingleAssetResponse {
   }
 }
 
-export async function getAllAsset(page: number): Promise<AssetResponse | undefined> {
+export async function getAllAsset(page: number, size: string): Promise<AssetResponse | undefined> {
   try {
-    const res = await http(`/asset?page=${page}`)
+    const res = await http(`/asset?page=${page}&page_size=${size}`)
     return res.data
   } catch (error) {
     console.log(error)
